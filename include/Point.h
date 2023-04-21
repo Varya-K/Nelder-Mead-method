@@ -2,24 +2,22 @@
 
 class Point
 {
-private:
-	int dimensionality; //размерность пространства
-	double* coordinates;
 
 public:
 	Point();
-	Point(int dimensoinality);
-	Point(int dimensionality, double* coordinates);
-	double* Coordinates() const;
-	void Coordinates(double* coord);
-	int Dimensionality() const;
-	void rand_coordinates();
-	double& operator[] (int i);
-	Point operator+ (Point p);
-	Point operator- (Point p);
-	Point operator* (double a);
-	Point operator/ (double a);
+	Point(int dimensoin);
+	Point(int dimension, double* coordinates);
+	//~Point();
+	int Dimension() const;
+	double operator[](int i) const;
+	Point operator+ (Point p) const;
+	Point operator- (Point p) const;
+	Point operator* (double a) const;
+	Point operator/ (double a) const;
 
+private:
+	int dimension; //размерность пространства
+	double* coordinates;
 };
 
 Point operator*(double a, Point p);

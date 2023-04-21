@@ -5,21 +5,18 @@
 
 class Simplex
 {
-private:
-	int count;
-	int dimensionality;
-	Point* points;
 public:
-	Simplex(int count, int dimensoinality);
-	Simplex(int count, int dimensionality, Point* pionts);
+	Simplex(int count, int dimension); //создает симплекс размера count с случайными точками размерности dimension
+	~Simplex();
 	int Count() const;
-	int Dimensionality() const;
-	Point* Points() const;
-	void Points(Point* s);
+	int Dimension() const;
 	Point& operator[](int i);
-	void rand_points();
 	Point centroid(int ind_except);
 	void sort_simplex(Function* f);
 	double standard_deviation(Function* f);
+private:
+	int count;
+	int dimension;
+	Point* points;
 };
 

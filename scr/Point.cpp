@@ -2,77 +2,81 @@
 #include <iostream>
 
 
-Point::Point() : dimensionality(0)
-				, coordinates{}
-{}
 
-Point::Point(int dimensionality) {
-	this->dimensionality = dimensionality;
-	coordinates=new double[dimensionality]();
-}
+Point::Point() :dimension(0), coordinates(new double[0]) {};
 
-Point::Point(int dimensionality, double* coordinates) : Point(dimensionality) {
-	this->coordinates = coordinates;
-}
-
-double* Point::Coordinates() const { return coordinates; }
-void Point::Coordinates(double* coord) { coordinates = coord; }
-int Point::Dimensionality() const { return dimensionality; }
-
-void Point::rand_coordinates() {
-	for (int i = 0; i < dimensionality; i++) {
-		coordinates[i] = pow(-1, rand() % 2) * ((float)rand()/(float)rand());
+Point::Point(int Dimension): dimension(Dimension){
+	coordinates=new double[Dimension]();
+	for (int i = 0; i < Dimension; i++) {
+		coordinates[i] = pow(-1, rand() % 2) * ((float)rand() / (float)rand());
 	}
 }
 
-double& Point::operator[] (int i) {
-	if (i < dimensionality && i >= 0) {
-		return coordinates[i];
-	}
+Point::Point(int Dimension, double* Coordinates) : dimension(Dimension) 
+												, coordinates(Coordinates)  {}
 
+/*Point::~Point() {
+	delete[] coordinates;
+}*/
+
+int Point::Dimension() const { return dimension; }
+
+double Point::operator[](int i) const {
+	return coordinates[i];
 }
 
-Point Point::operator+ (Point p) {
-	Point p1(dimensionality);
-	if (dimensionality == p.dimensionality) {
-		for (int i = 0; i < dimensionality; i++) {
-			p1[i] = coordinates[i] + p[i];
+Point Point::operator+ (Point p) const {
+	if (dimension == p.dimension) {
+		double* coord = new double[dimension];
+		for (int i = 0; i < dimension; i++) {
+			coord[i] = coordinates[i] + p.coordinates[i];
 		}
+		Point p1(dimension, coord);
+		return p1;
+
+
+	}
+	else return 0;
+}
+
+Point Point::operator- (Point p) const {
+	if (dimension == p.dimension) {
+		double* coord = new double[dimension];
+		for (int i = 0; i < dimension; i++) {
+			coord[i] = coordinates[i] - p.coordinates[i];
+		}
+		Point p1(dimension, coord);
 		return p1;
 	}
-	else return p1;
+	else return 0;
 }
-Point Point::operator- (Point p) {
-	Point p1(dimensionality);
-	if (dimensionality == p.Dimensionality()) {
-		for (int i = 0; i < dimensionality; i++) {
-			p1[i] = coordinates[i] - p[i];
-		}
-		return p1;
+
+
+
+Point Point::operator* (double a) const {
+	double* coord = new double[dimension];
+	for (int i = 0; i < dimension; i++) {
+		coord[i] = coordinates[i] * a;
 	}
-	else return p1;
-}
-Point Point::operator* (double a) {
-	Point p1(dimensionality);
-	for (int i = 0; i < dimensionality; i++) {
-		p1[i] = coordinates[i] * a;
-	}
+	Point p1(dimension, coord);
 	return p1;
 
 }
-Point Point::operator/ (double a) {
-	Point p1(dimensionality);
-	for (int i = 0; i < dimensionality; i++) {
-		p1[i] = coordinates[i] / a;
+Point Point::operator/ (double a)  const{
+	double* coord = new double[dimension];
+	for (int i = 0; i < dimension; i++) {
+		coord[i] = coordinates[i] / a;
 	}
+	Point p1(dimension, coord);
 	return p1;
 }
 
 Point operator* (double a, Point p) {
-	Point p1(p.Dimensionality());
-	for (int i = 0; i < p.Dimensionality(); i++) {
-		p1[i] = p[i] * a;
+	double* coord = new double[p.Dimension()];
+	for (int i = 0; i < p.Dimension(); i++) {
+		coord[i] = p[i] * a;
 	}
+	Point p1(p.Dimension(), coord);
 	return p1;
 }
 

@@ -3,10 +3,10 @@
 class Function
 {
 protected:
-	int dimensionality;
+	int dimension;
 public:
-	Function(int dimenionality);
-	int Dimensionality() const;
+	Function(int dimention);
+	int Dimension() const;
 	virtual double Calculate(Point p) = 0;
 };
 

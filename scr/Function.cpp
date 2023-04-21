@@ -1,10 +1,10 @@
 #include "Function.h"
 
 
-Function::Function(int dimensionality) {
-	this->dimensionality = dimensionality;
+Function::Function(int dimension) {
+	this->dimension = dimension;
 }
 
-int Function::Dimensionality() const { return dimensionality; }
+int Function::Dimension() const { return dimension; }
 
 

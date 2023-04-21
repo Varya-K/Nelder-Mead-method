@@ -2,20 +2,21 @@
 #include <iostream>
 
 
-Simplex::Simplex(int count, int dimensionality) {
+Simplex::Simplex(int count, int dimension) {
 	this->count = count;
-	this->dimensionality = dimensionality;
+	this->dimension = dimension;
 	points = new Point[count];
+	for (int i = 0; i < count; i++) {
+		points[i] = Point(dimension);
+	}
 }
 
-Simplex::Simplex(int count, int dimensionality, Point* points): Simplex(count, dimensionality) {
-	this->points = points;
+Simplex::~Simplex() {
+	delete[] points;
 }
 
 int Simplex::Count() const { return count; }
-int Simplex::Dimensionality() const { return dimensionality; }
-Point* Simplex::Points() const { return points; }
-void Simplex::Points(Point* s) { points = s; }
+int Simplex::Dimension() const { return dimension; }
 
 Point& Simplex::operator[](int i) {
 	if (i >= 0 && i < count) {
@@ -23,16 +24,9 @@ Point& Simplex::operator[](int i) {
 	}
 }
 
-void Simplex::rand_points() {
-	for (int i = 0; i < count; i++) {
-		Point p(dimensionality);
-		p.rand_coordinates();
-		points[i] = p;
-	}
-}
 
 Point Simplex::centroid(int ind_except) {
-	Point sum(dimensionality);
+	Point sum(dimension, new double[dimension]());
 	for (int i = 0; i < count; i++) {
 		if (i != ind_except) {
 			sum = sum + points[i];
